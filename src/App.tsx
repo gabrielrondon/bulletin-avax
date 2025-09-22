@@ -242,7 +242,7 @@ function App() {
                 className={`relative py-4 px-8 font-semibold text-sm transition-all duration-300 ${
                   activeTab === 'validators'
                     ? 'bg-red-600 text-white shadow-lg'
-                    : 'bg-white text-slate-700 hover:text-red-600 hover:bg-red-50'
+                    : 'bg-white text-slate-700 hover:text-red-600 hover:bg-red-50 border-r border-red-100'
                 }`}
               >
                 Validators
@@ -253,6 +253,17 @@ function App() {
                   <div className="absolute bottom-0 left-0 right-0 h-1 bg-red-400"></div>
                 )}
               </button>
+              <a
+                href="https://bulletin-avax-docs.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative py-4 px-8 font-semibold text-sm transition-all duration-300 bg-white text-slate-700 hover:text-blue-600 hover:bg-blue-50"
+              >
+                Documentation
+                <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-blue-100 text-blue-700">
+                  LEARN
+                </span>
+              </a>
             </nav>
           </div>
         </div>
