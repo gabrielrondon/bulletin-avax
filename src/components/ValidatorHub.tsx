@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { validatorApi, ValidatorMetrics, StakingAnalytics, ValidatorRanking, StakingOpportunity, DelegationRecommendation } from '../services/validatorApi';
 
 interface ValidatorHubProps {
@@ -9,7 +9,6 @@ const ValidatorHub: React.FC<ValidatorHubProps> = ({ l1Networks }) => {
   const [analytics, setAnalytics] = useState<StakingAnalytics | null>(null);
   const [rankings, setRankings] = useState<ValidatorRanking[]>([]);
   const [opportunities, setOpportunities] = useState<StakingOpportunity[]>([]);
-  const [selectedValidator, setSelectedValidator] = useState<ValidatorMetrics | null>(null);
   const [recommendations, setRecommendations] = useState<DelegationRecommendation | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeView, setActiveView] = useState<'overview' | 'rankings' | 'opportunities' | 'calculator'>('overview');
@@ -19,6 +18,25 @@ const ValidatorHub: React.FC<ValidatorHubProps> = ({ l1Networks }) => {
   const [stakeAmount, setStakeAmount] = useState<number>(10000);
   const [riskTolerance, setRiskTolerance] = useState<'low' | 'medium' | 'high'>('medium');
   const [strategy, setStrategy] = useState<'conservative' | 'balanced' | 'aggressive'>('balanced');
+
+  const fetchValidatorData = useCallback(async () => {
+    try {
+      setLoading(true);
+      const [analyticsData, rankingsData, opportunitiesData] = await Promise.all([
+        validatorApi.getStakingAnalytics(),
+        validatorApi.getValidatorRankings(),
+        validatorApi.getStakingOpportunities(stakeAmount, riskTolerance)
+      ]);
+
+      setAnalytics(analyticsData);
+      setRankings(rankingsData);
+      setOpportunities(opportunitiesData);
+    } catch (error) {
+      console.error('Failed to fetch validator data:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [stakeAmount, riskTolerance]);
 
   useEffect(() => {
     fetchValidatorData();
@@ -42,26 +60,7 @@ const ValidatorHub: React.FC<ValidatorHubProps> = ({ l1Networks }) => {
         validatorApi.stopValidatorMonitoring(intervalId);
       };
     }
-  }, [isMonitoring]);
-
-  const fetchValidatorData = async () => {
-    try {
-      setLoading(true);
-      const [analyticsData, rankingsData, opportunitiesData] = await Promise.all([
-        validatorApi.getStakingAnalytics(),
-        validatorApi.getValidatorRankings(),
-        validatorApi.getStakingOpportunities(stakeAmount, riskTolerance)
-      ]);
-
-      setAnalytics(analyticsData);
-      setRankings(rankingsData);
-      setOpportunities(opportunitiesData);
-    } catch (error) {
-      console.error('Failed to fetch validator data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [isMonitoring, fetchValidatorData]);
 
   const handleCalculateRecommendations = async () => {
     try {
@@ -93,15 +92,6 @@ const ValidatorHub: React.FC<ValidatorHubProps> = ({ l1Networks }) => {
     }
   };
 
-  const getReliabilityColor = (reliability: string) => {
-    switch (reliability) {
-      case 'excellent': return 'text-green-600 bg-green-100';
-      case 'good': return 'text-blue-600 bg-blue-100';
-      case 'fair': return 'text-yellow-600 bg-yellow-100';
-      case 'poor': return 'text-red-600 bg-red-100';
-      default: return 'text-gray-600 bg-gray-100';
-    }
-  };
 
   if (loading) {
     return (
