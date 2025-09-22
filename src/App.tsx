@@ -3,6 +3,7 @@ import './App.css';
 import { avalancheApi } from './services/avalancheApi';
 import PerformanceDashboard from './components/PerformanceDashboard';
 import ICMHub from './components/ICMHub';
+import ValidatorHub from './components/ValidatorHub';
 
 interface Validator {
   nodeID: string;
@@ -42,7 +43,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedNetwork, setSelectedNetwork] = useState<L1Network | null>(null);
-  const [activeTab, setActiveTab] = useState<'explorer' | 'performance' | 'icm'>('explorer');
+  const [activeTab, setActiveTab] = useState<'explorer' | 'performance' | 'icm' | 'validators'>('explorer');
 
   useEffect(() => {
     fetchL1Data();
@@ -134,7 +135,7 @@ function App() {
           <div className="flex justify-between items-center py-6">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Bulletin AVAX</h1>
-              <p className="text-gray-600">Avalanche L1 Explorer, Performance Monitor & ICM Analytics</p>
+              <p className="text-gray-600">Complete Avalanche Ecosystem Analytics Platform</p>
             </div>
             <div className="text-right">
               <p className="text-sm text-gray-500">
@@ -183,6 +184,19 @@ function App() {
                 ICM Hub
                 <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
                   Unique
+                </span>
+              </button>
+              <button
+                onClick={() => setActiveTab('validators')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'validators'
+                    ? 'border-red-500 text-red-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                Validator Intelligence
+                <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  Pro
                 </span>
               </button>
             </nav>
@@ -291,6 +305,12 @@ function App() {
 
         {activeTab === 'icm' && l1Data && (
           <ICMHub
+            l1Networks={l1Data.l1s.map(l1 => ({ id: l1.id, name: l1.name }))}
+          />
+        )}
+
+        {activeTab === 'validators' && l1Data && (
+          <ValidatorHub
             l1Networks={l1Data.l1s.map(l1 => ({ id: l1.id, name: l1.name }))}
           />
         )}
