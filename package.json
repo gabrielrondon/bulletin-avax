@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "An open-source Avalanche L1 Explorer providing real-time insights into Layer 1 blockchains, validators, and network health.",
   "main": "index.js",
-  "homepage": ".",
+  "homepage": "https://github.com/gabrielrondon/bulletin-avax#readme",
   "scripts": {
     "dev": "npm run dev:server & npm run dev:client",
     "dev:server": "cd server && npm run dev",
@@ -41,5 +41,7 @@
   "bugs": {
     "url": "https://github.com/gabrielrondon/bulletin-avax/issues"
   },
-  "homepage": "https://github.com/gabrielrondon/bulletin-avax#readme"
+  "dependencies": {
+    "react-scripts": "^5.0.1"
+  }
 }
