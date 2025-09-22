@@ -79,16 +79,39 @@ function App() {
   };
 
   const getExplorerUrl = (id: string, type: 'blockchain' | 'subnet') => {
-    // Use Avascan.info as the primary explorer since subnets.avax.network might have issues
-    const baseUrl = 'https://avascan.info';
+    // Try multiple explorers - many subnets are not indexed by all explorers
     if (type === 'blockchain') {
-      return `${baseUrl}/blockchain/${id}`;
+      return `https://avascan.info/blockchain/${id}`;
     }
-    return `${baseUrl}/blockchain/${id}`; // Both cases use blockchain for Avascan
+    // For subnets, try Snowscan first (better subnet support), then Avascan
+    return `https://snowscan.xyz/blockchain/${id}`;
   };
 
-  const openExplorer = (id: string, type: 'blockchain' | 'subnet') => {
-    window.open(getExplorerUrl(id, type), '_blank');
+  const getAlternativeExplorerUrl = (id: string, type: 'blockchain' | 'subnet') => {
+    if (type === 'blockchain') {
+      return `https://snowscan.xyz/blockchain/${id}`;
+    }
+    return `https://avascan.info/blockchain/${id}`;
+  };
+
+  const openExplorer = (id: string, type: 'blockchain' | 'subnet', network?: L1Network) => {
+    const primaryUrl = getExplorerUrl(id, type);
+    const alternativeUrl = getAlternativeExplorerUrl(id, type);
+
+    // Open primary explorer
+    window.open(primaryUrl, '_blank');
+
+    // If it's a subnet and we suspect it might not be indexed, show a helpful message
+    if (type === 'subnet' && network) {
+      setTimeout(() => {
+        const shouldShowAlternative = window.confirm(
+          `If ${network.name} data doesn't load, many subnets are still being indexed by explorers.\n\nTry alternative explorer?`
+        );
+        if (shouldShowAlternative) {
+          window.open(alternativeUrl, '_blank');
+        }
+      }, 2000);
+    }
   };
 
   const openNetworkDetails = (network: L1Network) => {
@@ -306,7 +329,7 @@ function App() {
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
-                              openExplorer(l1.subnetID, 'subnet');
+                              openExplorer(l1.subnetID, 'subnet', l1);
                             }}
                             className="text-sm bg-gradient-to-r from-emerald-100 to-emerald-200 hover:from-emerald-200 hover:to-emerald-300 px-3 py-2 rounded-lg transition-all duration-200 font-medium text-emerald-700 hover:shadow-md"
                           >
@@ -509,7 +532,7 @@ function App() {
                     <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-2 sm:space-y-0">
                       <span className="font-semibold text-slate-600">Subnet ID:</span>
                       <button
-                        onClick={() => openExplorer(selectedNetwork.subnetID, 'subnet')}
+                        onClick={() => openExplorer(selectedNetwork.subnetID, 'subnet', selectedNetwork)}
                         className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-4 py-2 rounded-lg transition-all duration-200 font-medium shadow-md hover:shadow-lg"
                       >
                         {formatAddress(selectedNetwork.subnetID)} 🔗 View

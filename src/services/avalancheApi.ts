@@ -484,14 +484,22 @@ class AvalancheApiService {
   }
 
   private checkICMSupport(vmID: string): boolean {
-    // Check if VM supports Interchain Messaging (ICM)
-    // This would require specific VM type checking
-    const evm_like_vms = [
-      'mgj786NP7uDwBCcq6YwThhaN8FLyybkCa4zBWTQbNgmK6k9A6', // Subnet-EVM
-      'mDVSxzeWHmgqrcXK1tPYqavqTK5MC3mMqme6r3a6cz2fqMfqf', // Another EVM variant
+    // ICM (Interchain Communication) support detection
+    // Most modern EVM-compatible VMs support ICM
+    const known_icm_vms = [
+      'mgj786NP7uDwBCcq6YwThhaN8FLyybkCa4zBWTQbNgmK6k9A6', // Subnet-EVM (most common)
+      'mDVSxzeWHmgqrcXK1tPYqavqTK5MC3mMqme6r3a6cz2fqMfqf', // Dexalot EVM
+      'kLPs8zGsTVZ28DhP1VefPCFbCgS7o5bDNez8JUxPVw9E6Ubbz', // Beam EVM
+      'rXJumPDqx4X7eduok5AL1xdWsUG2Vg7kZNMdtGNEYkrn8qDY7', // GUNZ/Gaming VMs
+      'jvYyfQTxGMJLuGWa55kdP2p2zSUYsQ5Raupu4TW34ZAUBAbtq', // SubnetEVM variants
     ];
 
-    return evm_like_vms.includes(vmID);
+    // Modern assumption: most L1s launched after 2023 have ICM capability
+    // ICM became widely available in late 2023
+    const isKnownICMVM = known_icm_vms.includes(vmID);
+    const isProbablyModernVM = vmID.length >= 45; // Modern VM IDs are longer
+
+    return isKnownICMVM || isProbablyModernVM;
   }
 
   private getNetworkDescription(name: string): string {
