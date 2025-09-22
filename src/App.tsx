@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { avalancheApi } from './services/avalancheApi';
+import PerformanceDashboard from './components/PerformanceDashboard';
+import ICMHub from './components/ICMHub';
 
 interface Validator {
   nodeID: string;
@@ -40,6 +42,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedNetwork, setSelectedNetwork] = useState<L1Network | null>(null);
+  const [activeTab, setActiveTab] = useState<'explorer' | 'performance' | 'icm'>('explorer');
 
   useEffect(() => {
     fetchL1Data();
@@ -131,7 +134,7 @@ function App() {
           <div className="flex justify-between items-center py-6">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Bulletin AVAX</h1>
-              <p className="text-gray-600">Avalanche L1 Explorer</p>
+              <p className="text-gray-600">Avalanche L1 Explorer, Performance Monitor & ICM Analytics</p>
             </div>
             <div className="text-right">
               <p className="text-sm text-gray-500">
@@ -142,97 +145,155 @@ function App() {
               </p>
             </div>
           </div>
+
+          {/* Navigation Tabs */}
+          <div className="border-t border-gray-200">
+            <nav className="-mb-px flex space-x-8">
+              <button
+                onClick={() => setActiveTab('explorer')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'explorer'
+                    ? 'border-red-500 text-red-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                L1 Explorer
+              </button>
+              <button
+                onClick={() => setActiveTab('performance')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'performance'
+                    ? 'border-red-500 text-red-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                Performance Dashboard
+                <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                  Real-time
+                </span>
+              </button>
+              <button
+                onClick={() => setActiveTab('icm')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'icm'
+                    ? 'border-red-500 text-red-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                ICM Hub
+                <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                  Unique
+                </span>
+              </button>
+            </nav>
+          </div>
         </div>
       </header>
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-6">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-2">Layer 1 Networks</h2>
-          <p className="text-gray-600">
-            Explore all Avalanche Layer 1 blockchains and their network information.
-          </p>
-        </div>
+        {activeTab === 'explorer' && (
+          <>
+            <div className="mb-6">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-2">Layer 1 Networks</h2>
+              <p className="text-gray-600">
+                Explore all Avalanche Layer 1 blockchains and their network information.
+              </p>
+            </div>
 
-        {/* L1 Table */}
-        <div className="bg-white shadow-sm rounded-lg overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Name
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Blockchain ID
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Subnet ID
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    VM ID
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Validators
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Status
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {l1Data?.l1s.map((l1) => (
-                  <tr key={l1.id} className="hover:bg-gray-50 cursor-pointer" onClick={() => openNetworkDetails(l1)}>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="font-medium text-blue-600 hover:text-blue-800">
-                        {l1.name || 'Unknown'}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          openExplorer(l1.id, 'blockchain');
-                        }}
-                        className="text-sm bg-gray-100 hover:bg-blue-100 px-2 py-1 rounded transition-colors"
-                      >
-                        {formatAddress(l1.id)} 🔗
-                      </button>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          openExplorer(l1.subnetID, 'subnet');
-                        }}
-                        className="text-sm bg-gray-100 hover:bg-blue-100 px-2 py-1 rounded transition-colors"
-                      >
-                        {formatAddress(l1.subnetID)} 🔗
-                      </button>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <code className="text-sm bg-gray-100 px-2 py-1 rounded">
-                        {formatAddress(l1.vmID)}
-                      </code>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {l1.validatorCount}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                        l1.status === 'active'
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-gray-100 text-gray-800'
-                      }`}>
-                        {l1.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+            {/* L1 Table */}
+            <div className="bg-white shadow-sm rounded-lg overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Name
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Blockchain ID
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Subnet ID
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        VM ID
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Validators
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Status
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {l1Data?.l1s.map((l1) => (
+                      <tr key={l1.id} className="hover:bg-gray-50 cursor-pointer" onClick={() => openNetworkDetails(l1)}>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="font-medium text-blue-600 hover:text-blue-800">
+                            {l1.name || 'Unknown'}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              openExplorer(l1.id, 'blockchain');
+                            }}
+                            className="text-sm bg-gray-100 hover:bg-blue-100 px-2 py-1 rounded transition-colors"
+                          >
+                            {formatAddress(l1.id)} 🔗
+                          </button>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              openExplorer(l1.subnetID, 'subnet');
+                            }}
+                            className="text-sm bg-gray-100 hover:bg-blue-100 px-2 py-1 rounded transition-colors"
+                          >
+                            {formatAddress(l1.subnetID)} 🔗
+                          </button>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <code className="text-sm bg-gray-100 px-2 py-1 rounded">
+                            {formatAddress(l1.vmID)}
+                          </code>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {l1.validatorCount}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                            l1.status === 'active'
+                              ? 'bg-green-100 text-green-800'
+                              : 'bg-gray-100 text-gray-800'
+                          }`}>
+                            {l1.status}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </>
+        )}
+
+        {activeTab === 'performance' && l1Data && (
+          <PerformanceDashboard
+            l1Networks={l1Data.l1s.map(l1 => ({ id: l1.id, name: l1.name }))}
+          />
+        )}
+
+        {activeTab === 'icm' && l1Data && (
+          <ICMHub
+            l1Networks={l1Data.l1s.map(l1 => ({ id: l1.id, name: l1.name }))}
+          />
+        )}
 
         {/* Footer */}
         <div className="mt-8 text-center text-sm text-gray-500">
