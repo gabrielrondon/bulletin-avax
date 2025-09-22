@@ -3,14 +3,33 @@
   "version": "1.0.0",
   "description": "An open-source Avalanche L1 Explorer providing real-time insights into Layer 1 blockchains, validators, and network health.",
   "main": "index.js",
+  "homepage": ".",
   "scripts": {
     "dev": "npm run dev:server & npm run dev:client",
     "dev:server": "cd server && npm run dev",
-    "dev:client": "cd client && npm start",
-    "build": "cd client && npm run build",
-    "start": "cd server && npm start",
-    "vercel-build": "cd client && npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev:client": "npm start",
+    "build": "react-scripts build",
+    "start": "react-scripts start",
+    "vercel-build": "react-scripts build",
+    "test": "react-scripts test"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "repository": {
     "type": "git",
