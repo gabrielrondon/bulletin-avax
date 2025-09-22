@@ -391,6 +391,14 @@ function App() {
             </p>
             <div className="flex justify-center items-center space-x-6">
               <a
+                href="https://bulletin-avax-docs.vercel.app"
+                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-200 shadow-md hover:shadow-lg"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                📚 Documentation
+              </a>
+              <a
                 href="https://github.com/gabrielrondon/bulletin-avax"
                 className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-200 shadow-md hover:shadow-lg"
                 target="_blank"
