@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { validatorApi, ValidatorMetrics, StakingAnalytics, ValidatorRanking, StakingOpportunity, DelegationRecommendation } from '../services/validatorApi';
+import { validatorApi, StakingAnalytics, ValidatorRanking, StakingOpportunity, DelegationRecommendation } from '../services/validatorApi';
 
 interface ValidatorHubProps {
   l1Networks: Array<{ id: string; name: string }>;
