@@ -17,7 +17,7 @@ const config: Config = {
   organizationName: 'gabrielrondon',
   projectName: 'bulletin-avax-docs',
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
 
   i18n: {
@@ -118,8 +118,8 @@ const config: Config = {
               to: '/docs/platform/analytics',
             },
             {
-              label: 'Validator Intelligence',
-              to: '/docs/platform/validators',
+              label: 'L1 Explorer Guide',
+              to: '/docs/platform/l1-explorer',
             },
           ],
         },

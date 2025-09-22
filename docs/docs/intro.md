@@ -59,20 +59,20 @@ Unlike traditional blockchain explorers that focus on individual transactions, *
 ### **For Investors & Analysts**
 1. [Avalanche Introduction](./avalanche/introduction)
 2. [L1 Networks Overview](./avalanche/l1-networks)
-3. [Performance Metrics](./avalanche/performance-metrics)
+3. [ICM & Cross-Chain](./avalanche/icm)
 4. [Platform Analytics Guide](./platform/analytics)
 
 ### **For Developers**
-1. [Network Architecture](./avalanche/network-architecture)
-2. [VM Types](./avalanche/vm-types)
-3. [Development Stack](./avalanche/development-stack)
-4. [APIs and RPCs](./avalanche/apis-and-rpcs)
+1. [Avalanche Introduction](./avalanche/introduction)
+2. [L1 Networks Deep Dive](./avalanche/l1-networks)
+3. [ICM Cross-Chain Guide](./avalanche/icm)
+4. [Platform Getting Started](./platform/getting-started)
 
 ### **For Validators/Stakers**
 1. [Validators Overview](./avalanche/validators)
-2. [Staking Mechanics](./avalanche/staking-mechanics)
-3. [Delegation Strategies](./avalanche/delegation)
-4. [Validator Intelligence](./platform/validators)
+2. [ICM Cross-Chain](./avalanche/icm)
+3. [L1 Networks Guide](./avalanche/l1-networks)
+4. [L1 Explorer Platform](./platform/l1-explorer)
 
 ## 🤝 **Community & Support**
 

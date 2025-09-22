@@ -122,7 +122,7 @@ Traditional explorers show you individual transactions. **Bulletin AVAX** shows 
 
 Ready to dive deeper? Continue with:
 
-1. **[Network Architecture](./network-architecture)** - Technical deep dive
+1. **[L1 Networks Guide](./l1-networks)** - Understanding Layer 1 networks
 2. **[L1 Networks Guide](./l1-networks)** - Understanding Layer 1s
 3. **[Try the Platform](https://bulletin-avax.vercel.app)** - Explore live data
 
