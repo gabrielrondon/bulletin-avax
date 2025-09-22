@@ -121,7 +121,7 @@ const PerformanceDashboard: React.FC<PerformanceDashboardProps> = ({ l1Networks 
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-6 lg:space-y-0">
           <div className="text-center lg:text-left">
             <h2 className="text-4xl font-bold bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent mb-2">
-              📊 Performance Dashboard
+              Performance Dashboard
             </h2>
             <p className="text-xl text-slate-600">Real-time network metrics and performance monitoring</p>
           </div>
@@ -147,10 +147,10 @@ const PerformanceDashboard: React.FC<PerformanceDashboardProps> = ({ l1Networks 
               onChange={(e) => setSortBy(e.target.value as any)}
               className="bg-white border border-slate-300 rounded-xl px-4 py-3 text-lg font-medium focus:ring-red-500 focus:border-red-500 shadow-md"
             >
-              <option value="tps">🚀 Sort by TPS</option>
-              <option value="blockTime">⏱️ Sort by Block Time</option>
-              <option value="load">📊 Sort by Network Load</option>
-              <option value="uptime">⬆️ Sort by Uptime</option>
+              <option value="tps">Sort by TPS</option>
+              <option value="blockTime">Sort by Block Time</option>
+              <option value="load">Sort by Network Load</option>
+              <option value="uptime">Sort by Uptime</option>
             </select>
           </div>
         </div>
@@ -161,11 +161,13 @@ const PerformanceDashboard: React.FC<PerformanceDashboardProps> = ({ l1Networks 
         <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl shadow-lg p-6 border border-blue-200 hover:shadow-xl transition-all duration-300">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-bold text-blue-700 mb-1">🌐 Total Networks</h3>
+              <h3 className="text-lg font-bold text-blue-700 mb-1">Total Networks</h3>
               <p className="text-3xl font-bold text-slate-900">{performanceData.length}</p>
             </div>
             <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
-              <span className="text-white text-xl">📊</span>
+              <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
+              </svg>
             </div>
           </div>
         </div>
@@ -173,13 +175,15 @@ const PerformanceDashboard: React.FC<PerformanceDashboardProps> = ({ l1Networks 
         <div className="bg-gradient-to-br from-emerald-50 to-green-100 rounded-2xl shadow-lg p-6 border border-emerald-200 hover:shadow-xl transition-all duration-300">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-bold text-emerald-700 mb-1">🚀 Avg TPS</h3>
+              <h3 className="text-lg font-bold text-emerald-700 mb-1">Avg TPS</h3>
               <p className="text-3xl font-bold text-slate-900">
                 {Math.round(performanceData.reduce((sum, p) => sum + p.currentTPS, 0) / performanceData.length || 0)}
               </p>
             </div>
             <div className="w-12 h-12 bg-emerald-500 rounded-xl flex items-center justify-center">
-              <span className="text-white text-xl">⚡</span>
+              <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd"></path>
+              </svg>
             </div>
           </div>
         </div>
@@ -187,13 +191,15 @@ const PerformanceDashboard: React.FC<PerformanceDashboardProps> = ({ l1Networks 
         <div className="bg-gradient-to-br from-purple-50 to-pink-100 rounded-2xl shadow-lg p-6 border border-purple-200 hover:shadow-xl transition-all duration-300">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-bold text-purple-700 mb-1">⏱️ Avg Block Time</h3>
+              <h3 className="text-lg font-bold text-purple-700 mb-1">Avg Block Time</h3>
               <p className="text-3xl font-bold text-slate-900">
                 {(performanceData.reduce((sum, p) => sum + p.currentBlockTime, 0) / performanceData.length || 0).toFixed(1)}s
               </p>
             </div>
             <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center">
-              <span className="text-white text-xl">🕰️</span>
+              <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd"></path>
+              </svg>
             </div>
           </div>
         </div>
@@ -201,13 +207,15 @@ const PerformanceDashboard: React.FC<PerformanceDashboardProps> = ({ l1Networks 
         <div className="bg-gradient-to-br from-orange-50 to-red-100 rounded-2xl shadow-lg p-6 border border-orange-200 hover:shadow-xl transition-all duration-300">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-bold text-orange-700 mb-1">🟢 Networks Online</h3>
+              <h3 className="text-lg font-bold text-orange-700 mb-1">Networks Online</h3>
               <p className="text-3xl font-bold text-slate-900">
                 {performanceData.filter(p => p.uptimePercentage > 99).length}/{performanceData.length}
               </p>
             </div>
             <div className="w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center">
-              <span className="text-white text-xl">🌐</span>
+              <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path>
+              </svg>
             </div>
           </div>
         </div>
@@ -216,7 +224,7 @@ const PerformanceDashboard: React.FC<PerformanceDashboardProps> = ({ l1Networks 
       {/* Detailed Performance Table */}
       <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden border border-red-100">
         <div className="bg-gradient-to-r from-red-500 to-red-600 px-8 py-6">
-          <h3 className="text-2xl font-bold text-white">📊 Network Performance Metrics</h3>
+          <h3 className="text-2xl font-bold text-white">Network Performance Metrics</h3>
           <p className="text-red-100">Live performance data from all L1 networks</p>
         </div>
 
@@ -225,28 +233,28 @@ const PerformanceDashboard: React.FC<PerformanceDashboardProps> = ({ l1Networks 
             <thead className="bg-gradient-to-r from-slate-50 to-red-50">
               <tr>
                 <th className="px-6 py-4 text-left text-sm font-bold text-slate-700 uppercase tracking-wider">
-                  🌐 Network
+                  Network
                 </th>
                 <th className="px-6 py-4 text-left text-sm font-bold text-slate-700 uppercase tracking-wider">
-                  🚀 Current TPS
+                  Current TPS
                 </th>
                 <th className="px-6 py-4 text-left text-sm font-bold text-slate-700 uppercase tracking-wider">
-                  ⏱️ Block Time
+                  Block Time
                 </th>
                 <th className="px-6 py-4 text-left text-sm font-bold text-slate-700 uppercase tracking-wider">
-                  📊 Network Load
+                  Network Load
                 </th>
                 <th className="px-6 py-4 text-left text-sm font-bold text-slate-700 uppercase tracking-wider">
-                  ⛽ Gas Price
+                  Gas Price
                 </th>
                 <th className="px-6 py-4 text-left text-sm font-bold text-slate-700 uppercase tracking-wider">
-                  ✅ Finality
+                  Finality
                 </th>
                 <th className="px-6 py-4 text-left text-sm font-bold text-slate-700 uppercase tracking-wider">
-                  ⬆️ Uptime
+                  Uptime
                 </th>
                 <th className="px-6 py-4 text-left text-sm font-bold text-slate-700 uppercase tracking-wider">
-                  🟢 Status
+                  Status
                 </th>
               </tr>
             </thead>

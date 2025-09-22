@@ -168,55 +168,67 @@ function App() {
 
           {/* Navigation Tabs */}
           <div className="border-t border-red-100">
-            <nav className="-mb-px flex space-x-1">
+            <nav className="flex space-x-0">
               <button
                 onClick={() => setActiveTab('explorer')}
-                className={`py-4 px-6 rounded-t-lg font-semibold text-sm transition-all duration-200 ${
+                className={`relative py-4 px-8 font-semibold text-sm transition-all duration-300 ${
                   activeTab === 'explorer'
-                    ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg transform -translate-y-1'
-                    : 'text-slate-600 hover:text-red-600 hover:bg-red-50 hover:shadow-md'
+                    ? 'bg-red-600 text-white shadow-lg'
+                    : 'bg-white text-slate-700 hover:text-red-600 hover:bg-red-50 border-r border-red-100'
                 }`}
               >
-                🔍 L1 Explorer
+                L1 Explorer
+                {activeTab === 'explorer' && (
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-red-400"></div>
+                )}
               </button>
               <button
                 onClick={() => setActiveTab('performance')}
-                className={`py-4 px-6 rounded-t-lg font-semibold text-sm transition-all duration-200 ${
+                className={`relative py-4 px-8 font-semibold text-sm transition-all duration-300 ${
                   activeTab === 'performance'
-                    ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg transform -translate-y-1'
-                    : 'text-slate-600 hover:text-red-600 hover:bg-red-50 hover:shadow-md'
+                    ? 'bg-red-600 text-white shadow-lg'
+                    : 'bg-white text-slate-700 hover:text-red-600 hover:bg-red-50 border-r border-red-100'
                 }`}
               >
-                📊 Performance
-                <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-400 text-white animate-pulse">
+                Performance
+                <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-700">
                   LIVE
                 </span>
+                {activeTab === 'performance' && (
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-red-400"></div>
+                )}
               </button>
               <button
                 onClick={() => setActiveTab('icm')}
-                className={`py-4 px-6 rounded-t-lg font-semibold text-sm transition-all duration-200 ${
+                className={`relative py-4 px-8 font-semibold text-sm transition-all duration-300 ${
                   activeTab === 'icm'
-                    ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg transform -translate-y-1'
-                    : 'text-slate-600 hover:text-red-600 hover:bg-red-50 hover:shadow-md'
+                    ? 'bg-red-600 text-white shadow-lg'
+                    : 'bg-white text-slate-700 hover:text-red-600 hover:bg-red-50 border-r border-red-100'
                 }`}
               >
-                🌐 ICM Hub
-                <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-500 text-white">
+                ICM Hub
+                <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-purple-100 text-purple-700">
                   NEW
                 </span>
+                {activeTab === 'icm' && (
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-red-400"></div>
+                )}
               </button>
               <button
                 onClick={() => setActiveTab('validators')}
-                className={`py-4 px-6 rounded-t-lg font-semibold text-sm transition-all duration-200 ${
+                className={`relative py-4 px-8 font-semibold text-sm transition-all duration-300 ${
                   activeTab === 'validators'
-                    ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg transform -translate-y-1'
-                    : 'text-slate-600 hover:text-red-600 hover:bg-red-50 hover:shadow-md'
+                    ? 'bg-red-600 text-white shadow-lg'
+                    : 'bg-white text-slate-700 hover:text-red-600 hover:bg-red-50'
                 }`}
               >
-                ⚡ Validators
-                <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-500 text-white">
+                Validators
+                <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-blue-100 text-blue-700">
                   PRO
                 </span>
+                {activeTab === 'validators' && (
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-red-400"></div>
+                )}
               </button>
             </nav>
           </div>

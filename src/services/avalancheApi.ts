@@ -109,9 +109,9 @@ class AvalancheApiService {
 
       console.log(`Found ${meaningfulL1s.length} meaningful L1 networks out of ${blockchains.length} total`);
 
-      // Get additional info for each network - show up to 100 networks to get closer to all L1s
+      // Get additional info for each network - show ALL meaningful L1s
       const networksWithDetails = await Promise.all(
-        meaningfulL1s.slice(0, 100).map(async (blockchain) => {
+        meaningfulL1s.map(async (blockchain) => {
           try {
             // Try to get validators for the subnet
             const validators = await this.getCurrentValidators(blockchain.subnetID);
