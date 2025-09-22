@@ -101,10 +101,19 @@ function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-red-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading Avalanche L1 networks...</p>
+          <div className="relative">
+            <div className="animate-spin rounded-full h-32 w-32 border-4 border-red-200 mx-auto"></div>
+            <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-red-600 mx-auto absolute top-0"></div>
+          </div>
+          <div className="mt-8 bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl">
+            <h2 className="text-2xl font-bold text-slate-900 mb-2">Loading Bulletin AVAX</h2>
+            <p className="text-lg text-slate-600">Fetching real-time Avalanche L1 networks...</p>
+            <div className="mt-4 bg-red-100 rounded-full h-2 overflow-hidden">
+              <div className="bg-gradient-to-r from-red-500 to-red-600 h-full animate-pulse"></div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -112,91 +121,101 @@ function App() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="text-red-600 text-xl mb-4">⚠️ Error</div>
-          <p className="text-gray-600 mb-4">{error}</p>
-          <button
-            onClick={fetchL1Data}
-            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-          >
-            Retry
-          </button>
+          <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-red-200 max-w-md mx-auto">
+            <div className="text-6xl mb-4">🚨</div>
+            <h2 className="text-2xl font-bold text-slate-900 mb-2">Connection Error</h2>
+            <p className="text-slate-600 mb-6">{error}</p>
+            <button
+              onClick={fetchL1Data}
+              className="bg-gradient-to-r from-red-500 to-red-600 text-white px-8 py-3 rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-200 font-semibold shadow-md hover:shadow-lg"
+            >
+              🔄 Try Again
+            </button>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
+      <header className="bg-white/80 backdrop-blur-sm shadow-lg border-b border-red-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Bulletin AVAX</h1>
-              <p className="text-gray-600">Complete Avalanche Ecosystem Analytics Platform</p>
+          <div className="flex justify-between items-center py-8">
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-red-600 rounded-xl flex items-center justify-center">
+                <span className="text-white font-bold text-xl">B</span>
+              </div>
+              <div>
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent">
+                  Bulletin AVAX
+                </h1>
+                <p className="text-slate-600 font-medium">Professional Avalanche Ecosystem Analytics</p>
+              </div>
             </div>
-            <div className="text-right">
-              <p className="text-sm text-gray-500">
+            <div className="text-right bg-white/60 backdrop-blur-sm rounded-lg px-4 py-3 border border-red-100">
+              <p className="text-lg font-bold text-red-600">
                 {l1Data?.total} L1 Networks
               </p>
-              <p className="text-xs text-gray-400">
-                Last updated: {l1Data?.lastUpdated ? new Date(l1Data.lastUpdated).toLocaleTimeString() : 'Unknown'}
+              <p className="text-sm text-slate-500">
+                Updated: {l1Data?.lastUpdated ? new Date(l1Data.lastUpdated).toLocaleTimeString() : 'Unknown'}
               </p>
             </div>
           </div>
 
           {/* Navigation Tabs */}
-          <div className="border-t border-gray-200">
-            <nav className="-mb-px flex space-x-8">
+          <div className="border-t border-red-100">
+            <nav className="-mb-px flex space-x-1">
               <button
                 onClick={() => setActiveTab('explorer')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                className={`py-4 px-6 rounded-t-lg font-semibold text-sm transition-all duration-200 ${
                   activeTab === 'explorer'
-                    ? 'border-red-500 text-red-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg transform -translate-y-1'
+                    : 'text-slate-600 hover:text-red-600 hover:bg-red-50 hover:shadow-md'
                 }`}
               >
-                L1 Explorer
+                🔍 L1 Explorer
               </button>
               <button
                 onClick={() => setActiveTab('performance')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                className={`py-4 px-6 rounded-t-lg font-semibold text-sm transition-all duration-200 ${
                   activeTab === 'performance'
-                    ? 'border-red-500 text-red-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg transform -translate-y-1'
+                    : 'text-slate-600 hover:text-red-600 hover:bg-red-50 hover:shadow-md'
                 }`}
               >
-                Performance Dashboard
-                <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                  Real-time
+                📊 Performance
+                <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-400 text-white animate-pulse">
+                  LIVE
                 </span>
               </button>
               <button
                 onClick={() => setActiveTab('icm')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                className={`py-4 px-6 rounded-t-lg font-semibold text-sm transition-all duration-200 ${
                   activeTab === 'icm'
-                    ? 'border-red-500 text-red-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg transform -translate-y-1'
+                    : 'text-slate-600 hover:text-red-600 hover:bg-red-50 hover:shadow-md'
                 }`}
               >
-                ICM Hub
-                <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                  Unique
+                🌐 ICM Hub
+                <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-500 text-white">
+                  NEW
                 </span>
               </button>
               <button
                 onClick={() => setActiveTab('validators')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                className={`py-4 px-6 rounded-t-lg font-semibold text-sm transition-all duration-200 ${
                   activeTab === 'validators'
-                    ? 'border-red-500 text-red-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg transform -translate-y-1'
+                    : 'text-slate-600 hover:text-red-600 hover:bg-red-50 hover:shadow-md'
                 }`}
               >
-                Validator Intelligence
-                <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                  Pro
+                ⚡ Validators
+                <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-500 text-white">
+                  PRO
                 </span>
               </button>
             </nav>
@@ -208,84 +227,98 @@ function App() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {activeTab === 'explorer' && (
           <>
-            <div className="mb-6">
-              <h2 className="text-2xl font-semibold text-gray-900 mb-2">Layer 1 Networks</h2>
-              <p className="text-gray-600">
-                Explore all Avalanche Layer 1 blockchains and their network information.
-              </p>
+            <div className="mb-8">
+              <div className="text-center mb-8">
+                <h2 className="text-4xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent mb-4">
+                  Avalanche Layer 1 Networks
+                </h2>
+                <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+                  Explore the complete ecosystem of Avalanche L1 blockchains with real-time data and comprehensive analytics.
+                </p>
+              </div>
             </div>
 
             {/* L1 Table */}
-            <div className="bg-white shadow-sm rounded-lg overflow-hidden">
+            <div className="bg-white/90 backdrop-blur-sm shadow-xl rounded-2xl overflow-hidden border border-red-100">
+              <div className="bg-gradient-to-r from-red-500 to-red-600 px-6 py-4">
+                <h3 className="text-xl font-bold text-white">Live Network Data</h3>
+                <p className="text-red-100">Real-time information from Avalanche P-Chain</p>
+              </div>
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
+                <table className="min-w-full divide-y divide-red-100">
+                  <thead className="bg-gradient-to-r from-slate-50 to-red-50">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Name
+                      <th className="px-6 py-4 text-left text-sm font-bold text-slate-700 uppercase tracking-wider">
+                        Network Name
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-4 text-left text-sm font-bold text-slate-700 uppercase tracking-wider">
                         Blockchain ID
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-4 text-left text-sm font-bold text-slate-700 uppercase tracking-wider">
                         Subnet ID
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-4 text-left text-sm font-bold text-slate-700 uppercase tracking-wider">
                         VM ID
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-4 text-left text-sm font-bold text-slate-700 uppercase tracking-wider">
                         Validators
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-4 text-left text-sm font-bold text-slate-700 uppercase tracking-wider">
                         Status
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {l1Data?.l1s.map((l1) => (
-                      <tr key={l1.id} className="hover:bg-gray-50 cursor-pointer" onClick={() => openNetworkDetails(l1)}>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="font-medium text-blue-600 hover:text-blue-800">
-                            {l1.name || 'Unknown'}
+                  <tbody className="bg-white divide-y divide-slate-100">
+                    {l1Data?.l1s.map((l1, index) => (
+                      <tr key={l1.id} className="hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 cursor-pointer transition-all duration-200 hover:shadow-md" onClick={() => openNetworkDetails(l1)}>
+                        <td className="px-6 py-5 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <div className="w-3 h-3 bg-gradient-to-r from-red-400 to-red-500 rounded-full mr-3 animate-pulse"></div>
+                            <div className="font-bold text-slate-900 hover:text-red-600 transition-colors">
+                              {l1.name || 'Unknown Network'}
+                            </div>
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        <td className="px-6 py-5 whitespace-nowrap">
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
                               openExplorer(l1.id, 'blockchain');
                             }}
-                            className="text-sm bg-gray-100 hover:bg-blue-100 px-2 py-1 rounded transition-colors"
+                            className="text-sm bg-gradient-to-r from-blue-100 to-blue-200 hover:from-blue-200 hover:to-blue-300 px-3 py-2 rounded-lg transition-all duration-200 font-medium text-blue-700 hover:shadow-md"
                           >
                             {formatAddress(l1.id)} 🔗
                           </button>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        <td className="px-6 py-5 whitespace-nowrap">
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
                               openExplorer(l1.subnetID, 'subnet');
                             }}
-                            className="text-sm bg-gray-100 hover:bg-blue-100 px-2 py-1 rounded transition-colors"
+                            className="text-sm bg-gradient-to-r from-emerald-100 to-emerald-200 hover:from-emerald-200 hover:to-emerald-300 px-3 py-2 rounded-lg transition-all duration-200 font-medium text-emerald-700 hover:shadow-md"
                           >
                             {formatAddress(l1.subnetID)} 🔗
                           </button>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <code className="text-sm bg-gray-100 px-2 py-1 rounded">
+                        <td className="px-6 py-5 whitespace-nowrap">
+                          <code className="text-sm bg-slate-100 px-3 py-2 rounded-lg font-mono text-slate-600">
                             {formatAddress(l1.vmID)}
                           </code>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {l1.validatorCount}
+                        <td className="px-6 py-5 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <span className="text-lg font-bold text-slate-900">{l1.validatorCount}</span>
+                            <span className="ml-2 text-sm text-slate-500">nodes</span>
+                          </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                        <td className="px-6 py-5 whitespace-nowrap">
+                          <span className={`inline-flex px-3 py-1 text-sm font-bold rounded-full ${
                             l1.status === 'active'
-                              ? 'bg-green-100 text-green-800'
-                              : 'bg-gray-100 text-gray-800'
+                              ? 'bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700'
+                              : 'bg-gradient-to-r from-slate-100 to-gray-100 text-slate-600'
                           }`}>
-                            {l1.status}
+                            {l1.status === 'active' ? '🟢 Active' : '⚫ Inactive'}
                           </span>
                         </td>
                       </tr>
@@ -316,103 +349,163 @@ function App() {
         )}
 
         {/* Footer */}
-        <div className="mt-8 text-center text-sm text-gray-500">
-          <p>
-            Built with ❤️ for the Avalanche ecosystem •
-            <a href="https://github.com/gabrielrondon/bulletin-avax" className="text-red-600 hover:text-red-700 ml-1">
-              Open Source
-            </a>
-          </p>
+        <div className="mt-16 text-center">
+          <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 border border-red-100">
+            <p className="text-lg text-slate-600 mb-4">
+              Built with ❤️ for the Avalanche ecosystem
+            </p>
+            <div className="flex justify-center items-center space-x-6">
+              <a
+                href="https://github.com/gabrielrondon/bulletin-avax"
+                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-200 shadow-md hover:shadow-lg"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                ⭐ Star on GitHub
+              </a>
+              <a
+                href="https://avax.network"
+                className="inline-flex items-center px-6 py-3 bg-slate-100 text-slate-700 font-semibold rounded-lg hover:bg-slate-200 transition-all duration-200"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                🔺 Avalanche Network
+              </a>
+            </div>
+          </div>
         </div>
       </main>
 
       {/* Modal for Network Details */}
       {selectedNetwork && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50" onClick={closeModal}>
-          <div className="relative top-20 mx-auto p-5 border w-11/12 max-w-2xl shadow-lg rounded-md bg-white" onClick={(e) => e.stopPropagation()}>
-            <div className="mt-3">
+        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm overflow-y-auto h-full w-full z-50" onClick={closeModal}>
+          <div className="relative top-10 mx-auto p-0 w-11/12 max-w-4xl" onClick={(e) => e.stopPropagation()}>
+            <div className="bg-white/95 backdrop-blur-sm shadow-2xl rounded-3xl border border-red-200 overflow-hidden">
               {/* Header */}
-              <div className="flex items-center justify-between pb-4 border-b">
-                <h3 className="text-2xl font-bold text-gray-900">{selectedNetwork.name}</h3>
-                <button
-                  onClick={closeModal}
-                  className="text-gray-400 hover:text-gray-600 text-2xl font-bold"
-                >
-                  ×
-                </button>
+              <div className="bg-gradient-to-r from-red-500 to-red-600 px-8 py-6 text-white">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                      <span className="text-2xl">🔗</span>
+                    </div>
+                    <div>
+                      <h3 className="text-3xl font-bold">{selectedNetwork.name}</h3>
+                      <p className="text-red-100">Layer 1 Network Details</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={closeModal}
+                    className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white hover:text-red-100 transition-all duration-200"
+                  >
+                    ✕
+                  </button>
+                </div>
               </div>
 
               {/* Content */}
-              <div className="mt-6 space-y-6">
+              <div className="p-8 space-y-8">
                 {/* Description */}
-                <div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Description</h4>
-                  <p className="text-gray-700">{selectedNetwork.description}</p>
+                <div className="bg-gradient-to-r from-slate-50 to-blue-50 rounded-2xl p-6">
+                  <h4 className="text-xl font-bold text-slate-900 mb-3 flex items-center">
+                    📝 Description
+                  </h4>
+                  <p className="text-slate-700 text-lg leading-relaxed">{selectedNetwork.description || 'A Layer 1 blockchain on the Avalanche network.'}</p>
                 </div>
 
-                {/* Token Info */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <h4 className="text-lg font-semibold text-gray-900 mb-2">Token Information</h4>
-                    <div className="space-y-2">
-                      <p><span className="font-medium">Symbol:</span> {selectedNetwork.tokenSymbol}</p>
-                      <p><span className="font-medium">Total Supply:</span> {selectedNetwork.totalSupply}</p>
-                      <p><span className="font-medium">Created:</span> {selectedNetwork.createdAt}</p>
+                {/* Stats Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-2xl p-6 border border-emerald-200">
+                    <h4 className="text-xl font-bold text-slate-900 mb-4 flex items-center">
+                      💎 Token Information
+                    </h4>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold text-slate-600">Symbol:</span>
+                        <span className="font-bold text-emerald-700">{selectedNetwork.tokenSymbol || 'N/A'}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold text-slate-600">Total Supply:</span>
+                        <span className="font-bold text-emerald-700">{selectedNetwork.totalSupply || 'N/A'}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold text-slate-600">Created:</span>
+                        <span className="font-bold text-emerald-700">{selectedNetwork.createdAt || 'N/A'}</span>
+                      </div>
                     </div>
                   </div>
 
-                  <div>
-                    <h4 className="text-lg font-semibold text-gray-900 mb-2">Network Stats</h4>
-                    <div className="space-y-2">
-                      <p><span className="font-medium">Validators:</span> {selectedNetwork.validatorCount}</p>
-                      <p><span className="font-medium">Status:</span>
-                        <span className={`ml-2 inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                  <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-200">
+                    <h4 className="text-xl font-bold text-slate-900 mb-4 flex items-center">
+                      📊 Network Stats
+                    </h4>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold text-slate-600">Validators:</span>
+                        <span className="font-bold text-blue-700">{selectedNetwork.validatorCount}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold text-slate-600">Status:</span>
+                        <span className={`px-3 py-1 text-sm font-bold rounded-full ${
                           selectedNetwork.status === 'active'
-                            ? 'bg-green-100 text-green-800'
-                            : 'bg-gray-100 text-gray-800'
+                            ? 'bg-emerald-200 text-emerald-800'
+                            : 'bg-slate-200 text-slate-700'
                         }`}>
-                          {selectedNetwork.status}
+                          {selectedNetwork.status === 'active' ? '🟢 Active' : '⚫ Inactive'}
                         </span>
-                      </p>
-                      <p><span className="font-medium">ICM Enabled:</span> {selectedNetwork.icmEnabled ? '✅ Yes' : '❌ No'}</p>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold text-slate-600">ICM Enabled:</span>
+                        <span className="font-bold">{selectedNetwork.icmEnabled ? '✅ Yes' : '❌ No'}</span>
+                      </div>
                       {selectedNetwork.blockHeight && (
-                        <p><span className="font-medium">Block Height:</span> {selectedNetwork.blockHeight.toLocaleString()}</p>
+                        <div className="flex justify-between items-center">
+                          <span className="font-semibold text-slate-600">Block Height:</span>
+                          <span className="font-bold text-blue-700">{selectedNetwork.blockHeight.toLocaleString()}</span>
+                        </div>
                       )}
                       {selectedNetwork.tps && (
-                        <p><span className="font-medium">TPS:</span> {selectedNetwork.tps}</p>
+                        <div className="flex justify-between items-center">
+                          <span className="font-semibold text-slate-600">TPS:</span>
+                          <span className="font-bold text-blue-700">{selectedNetwork.tps}</span>
+                        </div>
                       )}
                       {selectedNetwork.avgBlockTime && (
-                        <p><span className="font-medium">Avg Block Time:</span> {selectedNetwork.avgBlockTime}s</p>
+                        <div className="flex justify-between items-center">
+                          <span className="font-semibold text-slate-600">Avg Block Time:</span>
+                          <span className="font-bold text-blue-700">{selectedNetwork.avgBlockTime}s</span>
+                        </div>
                       )}
                     </div>
                   </div>
                 </div>
 
                 {/* Technical Details */}
-                <div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Technical Details</h4>
-                  <div className="bg-gray-50 p-4 rounded-lg space-y-2">
-                    <div className="flex justify-between items-center">
-                      <span className="font-medium">Blockchain ID:</span>
+                <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 border border-purple-200">
+                  <h4 className="text-xl font-bold text-slate-900 mb-4 flex items-center">
+                    ⚙️ Technical Details
+                  </h4>
+                  <div className="space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-2 sm:space-y-0">
+                      <span className="font-semibold text-slate-600">Blockchain ID:</span>
                       <button
                         onClick={() => openExplorer(selectedNetwork.id, 'blockchain')}
-                        className="text-sm bg-blue-100 hover:bg-blue-200 px-3 py-1 rounded transition-colors"
+                        className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-4 py-2 rounded-lg transition-all duration-200 font-medium shadow-md hover:shadow-lg"
                       >
-                        {formatAddress(selectedNetwork.id)} 🔗
+                        {formatAddress(selectedNetwork.id)} 🔗 View
                       </button>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span className="font-medium">Subnet ID:</span>
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-2 sm:space-y-0">
+                      <span className="font-semibold text-slate-600">Subnet ID:</span>
                       <button
                         onClick={() => openExplorer(selectedNetwork.subnetID, 'subnet')}
-                        className="text-sm bg-blue-100 hover:bg-blue-200 px-3 py-1 rounded transition-colors"
+                        className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-4 py-2 rounded-lg transition-all duration-200 font-medium shadow-md hover:shadow-lg"
                       >
-                        {formatAddress(selectedNetwork.subnetID)} 🔗
+                        {formatAddress(selectedNetwork.subnetID)} 🔗 View
                       </button>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span className="font-medium">VM ID:</span>
-                      <code className="text-sm bg-gray-200 px-3 py-1 rounded">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-2 sm:space-y-0">
+                      <span className="font-semibold text-slate-600">VM ID:</span>
+                      <code className="bg-slate-200 text-slate-800 px-4 py-2 rounded-lg font-mono font-medium">
                         {formatAddress(selectedNetwork.vmID)}
                       </code>
                     </div>

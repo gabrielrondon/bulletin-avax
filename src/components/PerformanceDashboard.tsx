@@ -94,13 +94,20 @@ const PerformanceDashboard: React.FC<PerformanceDashboardProps> = ({ l1Networks 
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-sm p-6">
-        <div className="animate-pulse space-y-4">
-          <div className="h-4 bg-gray-200 rounded w-1/4"></div>
-          <div className="space-y-3">
-            {[...Array(5)].map((_, i) => (
-              <div key={i} className="h-16 bg-gray-200 rounded"></div>
-            ))}
+      <div className="space-y-6">
+        <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-red-100">
+          <div className="animate-pulse space-y-6">
+            <div className="h-8 bg-gradient-to-r from-red-200 to-red-300 rounded-lg w-1/3"></div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="h-24 bg-gradient-to-br from-slate-100 to-slate-200 rounded-xl"></div>
+              ))}
+            </div>
+            <div className="space-y-4">
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className="h-20 bg-gradient-to-r from-blue-100 to-purple-100 rounded-xl"></div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -108,27 +115,29 @@ const PerformanceDashboard: React.FC<PerformanceDashboardProps> = ({ l1Networks 
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header Controls */}
-      <div className="bg-white rounded-lg shadow-sm p-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900">Performance Dashboard</h2>
-            <p className="text-gray-600">Real-time network metrics and performance monitoring</p>
+      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-red-100">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-6 lg:space-y-0">
+          <div className="text-center lg:text-left">
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent mb-2">
+              📊 Performance Dashboard
+            </h2>
+            <p className="text-xl text-slate-600">Real-time network metrics and performance monitoring</p>
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
             {/* Real-time Toggle */}
-            <label className="flex items-center space-x-2">
+            <label className="flex items-center space-x-3 bg-gradient-to-r from-emerald-50 to-green-50 px-4 py-3 rounded-xl border border-emerald-200">
               <input
                 type="checkbox"
                 checked={isRealTime}
                 onChange={(e) => setIsRealTime(e.target.checked)}
-                className="rounded border-gray-300 text-red-600 focus:ring-red-500"
+                className="w-5 h-5 rounded border-emerald-300 text-emerald-600 focus:ring-emerald-500"
               />
-              <span className="text-sm text-gray-700">Real-time</span>
+              <span className="text-lg font-semibold text-emerald-700">Live Updates</span>
               {isRealTime && (
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <div className="w-3 h-3 bg-emerald-500 rounded-full animate-pulse shadow-lg"></div>
               )}
             </label>
 
@@ -136,87 +145,119 @@ const PerformanceDashboard: React.FC<PerformanceDashboardProps> = ({ l1Networks 
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-red-500 focus:border-red-500"
+              className="bg-white border border-slate-300 rounded-xl px-4 py-3 text-lg font-medium focus:ring-red-500 focus:border-red-500 shadow-md"
             >
-              <option value="tps">Sort by TPS</option>
-              <option value="blockTime">Sort by Block Time</option>
-              <option value="load">Sort by Network Load</option>
-              <option value="uptime">Sort by Uptime</option>
+              <option value="tps">🚀 Sort by TPS</option>
+              <option value="blockTime">⏱️ Sort by Block Time</option>
+              <option value="load">📊 Sort by Network Load</option>
+              <option value="uptime">⬆️ Sort by Uptime</option>
             </select>
           </div>
         </div>
       </div>
 
       {/* Performance Overview Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <h3 className="text-sm font-medium text-gray-500">Total Networks</h3>
-          <p className="text-2xl font-bold text-gray-900">{performanceData.length}</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl shadow-lg p-6 border border-blue-200 hover:shadow-xl transition-all duration-300">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-lg font-bold text-blue-700 mb-1">🌐 Total Networks</h3>
+              <p className="text-3xl font-bold text-slate-900">{performanceData.length}</p>
+            </div>
+            <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
+              <span className="text-white text-xl">📊</span>
+            </div>
+          </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <h3 className="text-sm font-medium text-gray-500">Avg TPS</h3>
-          <p className="text-2xl font-bold text-green-600">
-            {Math.round(performanceData.reduce((sum, p) => sum + p.currentTPS, 0) / performanceData.length || 0)}
-          </p>
+        <div className="bg-gradient-to-br from-emerald-50 to-green-100 rounded-2xl shadow-lg p-6 border border-emerald-200 hover:shadow-xl transition-all duration-300">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-lg font-bold text-emerald-700 mb-1">🚀 Avg TPS</h3>
+              <p className="text-3xl font-bold text-slate-900">
+                {Math.round(performanceData.reduce((sum, p) => sum + p.currentTPS, 0) / performanceData.length || 0)}
+              </p>
+            </div>
+            <div className="w-12 h-12 bg-emerald-500 rounded-xl flex items-center justify-center">
+              <span className="text-white text-xl">⚡</span>
+            </div>
+          </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <h3 className="text-sm font-medium text-gray-500">Avg Block Time</h3>
-          <p className="text-2xl font-bold text-blue-600">
-            {(performanceData.reduce((sum, p) => sum + p.currentBlockTime, 0) / performanceData.length || 0).toFixed(1)}s
-          </p>
+        <div className="bg-gradient-to-br from-purple-50 to-pink-100 rounded-2xl shadow-lg p-6 border border-purple-200 hover:shadow-xl transition-all duration-300">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-lg font-bold text-purple-700 mb-1">⏱️ Avg Block Time</h3>
+              <p className="text-3xl font-bold text-slate-900">
+                {(performanceData.reduce((sum, p) => sum + p.currentBlockTime, 0) / performanceData.length || 0).toFixed(1)}s
+              </p>
+            </div>
+            <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center">
+              <span className="text-white text-xl">🕰️</span>
+            </div>
+          </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <h3 className="text-sm font-medium text-gray-500">Networks Online</h3>
-          <p className="text-2xl font-bold text-green-600">
-            {performanceData.filter(p => p.uptimePercentage > 99).length}/{performanceData.length}
-          </p>
+        <div className="bg-gradient-to-br from-orange-50 to-red-100 rounded-2xl shadow-lg p-6 border border-orange-200 hover:shadow-xl transition-all duration-300">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-lg font-bold text-orange-700 mb-1">🟢 Networks Online</h3>
+              <p className="text-3xl font-bold text-slate-900">
+                {performanceData.filter(p => p.uptimePercentage > 99).length}/{performanceData.length}
+              </p>
+            </div>
+            <div className="w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center">
+              <span className="text-white text-xl">🌐</span>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Detailed Performance Table */}
-      <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900">Network Performance Metrics</h3>
+      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden border border-red-100">
+        <div className="bg-gradient-to-r from-red-500 to-red-600 px-8 py-6">
+          <h3 className="text-2xl font-bold text-white">📊 Network Performance Metrics</h3>
+          <p className="text-red-100">Live performance data from all L1 networks</p>
         </div>
 
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+          <table className="min-w-full divide-y divide-red-100">
+            <thead className="bg-gradient-to-r from-slate-50 to-red-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Network
+                <th className="px-6 py-4 text-left text-sm font-bold text-slate-700 uppercase tracking-wider">
+                  🌐 Network
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Current TPS
+                <th className="px-6 py-4 text-left text-sm font-bold text-slate-700 uppercase tracking-wider">
+                  🚀 Current TPS
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Block Time
+                <th className="px-6 py-4 text-left text-sm font-bold text-slate-700 uppercase tracking-wider">
+                  ⏱️ Block Time
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Network Load
+                <th className="px-6 py-4 text-left text-sm font-bold text-slate-700 uppercase tracking-wider">
+                  📊 Network Load
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Gas Price
+                <th className="px-6 py-4 text-left text-sm font-bold text-slate-700 uppercase tracking-wider">
+                  ⛽ Gas Price
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Finality
+                <th className="px-6 py-4 text-left text-sm font-bold text-slate-700 uppercase tracking-wider">
+                  ✅ Finality
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Uptime
+                <th className="px-6 py-4 text-left text-sm font-bold text-slate-700 uppercase tracking-wider">
+                  ⬆️ Uptime
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
+                <th className="px-6 py-4 text-left text-sm font-bold text-slate-700 uppercase tracking-wider">
+                  🟢 Status
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white divide-y divide-slate-100">
               {sortedData.map((network) => (
-                <tr key={network.l1Id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="font-medium text-gray-900">{network.l1Name}</div>
+                <tr key={network.l1Id} className="hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 transition-all duration-200">
+                  <td className="px-6 py-5 whitespace-nowrap">
+                    <div className="flex items-center">
+                      <div className="w-3 h-3 bg-gradient-to-r from-red-400 to-red-500 rounded-full mr-3 animate-pulse"></div>
+                      <div className="font-bold text-slate-900">{network.l1Name}</div>
+                    </div>
                     <div className="text-sm text-gray-500">
                       Updated {new Date(network.lastUpdated).toLocaleTimeString()}
                     </div>
